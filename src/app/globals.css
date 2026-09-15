@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+:root {
+  --color-noir: #0b0b0b;
+  --color-noir-soft: #141210;
+  --color-ivoire: #f5f0e8;
+  --color-or: #c9a96e;
+  --color-or-soft: #ddc491;
+  --color-espresso: #3a2820;
+  --color-vert-sombre: #16231d;
+
+  --background: var(--color-ivoire);
+  --foreground: var(--color-noir);
+}
+
+@theme inline {
+  --color-noir: var(--color-noir);
+  --color-noir-soft: var(--color-noir-soft);
+  --color-ivoire: var(--color-ivoire);
+  --color-or: var(--color-or);
+  --color-or-soft: var(--color-or-soft);
+  --color-espresso: var(--color-espresso);
+  --color-vert-sombre: var(--color-vert-sombre);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --font-display: var(--font-playfair);
+  --font-serif-alt: var(--font-cormorant);
+  --font-sans: var(--font-manrope);
+
+  --animate-fade-up: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-reveal: reveal 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      clip-path: inset(0 0 100% 0);
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0 0 0% 0);
+    }
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-or) transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-manrope), sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-playfair), serif;
+}
+
+.font-serif-alt {
+  font-family: var(--font-cormorant), serif;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(120deg, var(--color-or) 0%, var(--color-or-soft) 50%, var(--color-or) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.divider-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-or), transparent);
+}
+
+.mask-fade-b {
+  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

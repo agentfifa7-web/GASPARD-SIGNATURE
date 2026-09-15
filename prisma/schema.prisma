@@ -1,0 +1,219 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CLIENT
+  ADMIN
+}
+
+model User {
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  phone         String?
+  passwordHash  String
+  role          Role     @default(CLIENT)
+  birthday      String?
+  loyaltyPoints Int      @default(0)
+  createdAt     DateTime @default(now())
+
+  reservations Reservation[]
+  orders       Order[]
+  favorites    Favorite[]
+  eventRequests EventRequest[]
+  giftCards    GiftCard[]
+}
+
+model Category {
+  id        String     @id @default(cuid())
+  slug      String     @unique
+  name      String
+  order     Int        @default(0)
+  menuItems MenuItem[]
+}
+
+model MenuItem {
+  id             String   @id @default(cuid())
+  name           String
+  description    String
+  price          Int
+  image          String
+  ingredients    String
+  allergens      String
+  chefPick       Boolean  @default(false)
+  available      Boolean  @default(true)
+  categoryId     String
+  category       Category @relation(fields: [categoryId], references: [id])
+  createdAt      DateTime @default(now())
+  orderItems     OrderItem[]
+  favoritedBy    Favorite[]
+}
+
+model Favorite {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  menuItemId String
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+
+  @@unique([userId, menuItemId])
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model Reservation {
+  id        String            @id @default(cuid())
+  userId    String?
+  user      User?             @relation(fields: [userId], references: [id])
+  name      String
+  email     String
+  phone     String
+  guests    Int
+  date      String
+  time      String
+  occasion  String
+  space     String
+  notes     String?
+  status    ReservationStatus @default(PENDING)
+  createdAt DateTime          @default(now())
+}
+
+enum OrderMode {
+  SUR_PLACE
+  A_EMPORTER
+  LIVRAISON
+}
+
+enum OrderStatus {
+  RECUE
+  PREPARATION
+  PRETE
+  LIVRAISON
+  TERMINEE
+  ANNULEE
+}
+
+model Order {
+  id         String      @id @default(cuid())
+  userId     String?
+  user       User?       @relation(fields: [userId], references: [id])
+  mode       OrderMode
+  name       String
+  phone      String
+  address    String?
+  paymentMethod String
+  status     OrderStatus @default(RECUE)
+  total      Int
+  items      OrderItem[]
+  createdAt  DateTime    @default(now())
+}
+
+model OrderItem {
+  id         String   @id @default(cuid())
+  orderId    String
+  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  menuItemId String
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+  quantity   Int
+  unitPrice  Int
+  notes      String?
+}
+
+model EventCategory {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  name        String
+  description String
+  image       String
+  order       Int     @default(0)
+}
+
+model EventRequest {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  type      String
+  guests    Int
+  date      String
+  budget    String
+  ambiance  String
+  name      String
+  email     String
+  phone     String
+  status    String   @default("NOUVEAU")
+  createdAt DateTime @default(now())
+}
+
+model StoryPost {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  category  String
+  title     String
+  excerpt   String
+  content   String
+  image     String
+  author    String
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model GalleryImage {
+  id        String   @id @default(cuid())
+  category  String
+  image     String
+  caption   String
+  featured  Boolean  @default(false)
+  order     Int      @default(0)
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  author    String
+  rating    Int
+  content   String
+  source    String   @default("Google")
+  createdAt DateTime @default(now())
+}
+
+model GiftCard {
+  id         String   @id @default(cuid())
+  code       String   @unique
+  amount     Int
+  fromName   String
+  toName     String
+  message    String?
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id])
+  redeemed   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+model Promotion {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  active      Boolean  @default(true)
+  startDate   String?
+  endDate     String?
+  createdAt   DateTime @default(now())
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+}
