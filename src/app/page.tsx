@@ -7,6 +7,8 @@ import { GalleryTeaser } from "@/components/home/GalleryTeaser";
 import { Testimonials } from "@/components/home/Testimonials";
 import { LocationCTA } from "@/components/home/LocationCTA";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const [chefPick, stories, gallery, testimonials] = await Promise.all([
     prisma.menuItem.findFirst({ where: { chefPick: true, available: true } }),
