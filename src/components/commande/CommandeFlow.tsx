@@ -97,8 +97,10 @@ export function CommandeFlow() {
                     key={m.id}
                     onClick={() => setMode(m.id)}
                     className={cn(
-                      "flex flex-col items-center gap-2 border p-5 transition-colors",
-                      mode === m.id ? "border-or bg-or/10" : "border-noir/15 hover:border-or/50"
+                      "flex flex-col items-center gap-2 border p-5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-or",
+                      mode === m.id
+                        ? "border-or bg-or/10 shadow-[0_10px_24px_-12px_rgba(201,169,110,0.5)]"
+                        : "border-noir/15 hover:-translate-y-0.5 hover:border-or/50 hover:shadow-[0_10px_20px_-14px_rgba(11,11,11,0.3)]"
                     )}
                   >
                     <m.icon className="h-6 w-6 text-or" strokeWidth={1.5} />
@@ -201,8 +203,10 @@ export function CommandeFlow() {
                   key={p}
                   onClick={() => setPaymentMethod(p)}
                   className={cn(
-                    "border p-4 text-left text-sm transition-colors",
-                    paymentMethod === p ? "border-or bg-or/10 text-noir" : "border-noir/15 text-noir/60 hover:border-or/50"
+                    "border p-4 text-left text-sm transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-or",
+                    paymentMethod === p
+                      ? "border-or bg-or/10 text-noir shadow-[0_10px_24px_-12px_rgba(201,169,110,0.5)]"
+                      : "border-noir/15 text-noir/60 hover:-translate-y-0.5 hover:border-or/50 hover:shadow-[0_10px_20px_-14px_rgba(11,11,11,0.3)]"
                   )}
                 >
                   {p}

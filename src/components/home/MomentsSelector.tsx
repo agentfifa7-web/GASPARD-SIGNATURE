@@ -43,7 +43,7 @@ export function MomentsSelector() {
             >
               <Link
                 href={moment.href}
-                className="group flex flex-col items-center gap-4 border border-ivoire/10 bg-noir/30 px-4 py-10 text-center transition-all duration-300 hover:border-or hover:bg-noir/60"
+                className="group flex flex-col items-center gap-4 border border-ivoire/10 bg-noir/30 px-4 py-10 text-center transition-all duration-300 hover:-translate-y-1 hover:border-or hover:bg-noir/60 hover:shadow-[0_20px_40px_-20px_rgba(201,169,110,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-or"
               >
                 <moment.icon
                   className="h-8 w-8 text-or transition-transform duration-300 group-hover:scale-110"

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { AdminHeader } from "@/components/admin/AdminHeader";
+import { Card } from "@/components/ui/Card";
 import { formatFCFA } from "@/lib/utils";
 import { CalendarDays, ShoppingBag, Wallet, Users } from "lucide-react";
 
@@ -39,16 +40,16 @@ export default async function AdminDashboardPage() {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {kpis.map((kpi) => (
-          <div key={kpi.label} className="border border-noir/10 bg-white/40 p-6">
+          <Card key={kpi.label} interactive className="p-6">
             <kpi.icon className="h-5 w-5 text-or" />
             <p className="mt-4 font-display text-2xl text-noir">{kpi.value}</p>
             <p className="mt-1 text-xs uppercase tracking-[0.1em] text-noir/50">{kpi.label}</p>
-          </div>
+          </Card>
         ))}
       </div>
 
       <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <div className="border border-noir/10 bg-white/40 p-6">
+        <Card className="p-6">
           <h2 className="font-display text-lg text-noir">Dernières commandes</h2>
           <div className="mt-4 space-y-3">
             {recentOrders.length === 0 && <p className="text-sm text-noir/40">Aucune commande.</p>}
@@ -60,9 +61,9 @@ export default async function AdminDashboardPage() {
               </div>
             ))}
           </div>
-        </div>
+        </Card>
 
-        <div className="border border-noir/10 bg-white/40 p-6">
+        <Card className="p-6">
           <h2 className="font-display text-lg text-noir">Dernières réservations</h2>
           <div className="mt-4 space-y-3">
             {recentReservations.length === 0 && <p className="text-sm text-noir/40">Aucune réservation.</p>}
@@ -74,7 +75,7 @@ export default async function AdminDashboardPage() {
               </div>
             ))}
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   );

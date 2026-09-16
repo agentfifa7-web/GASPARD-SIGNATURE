@@ -1,14 +1,44 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Scene } from "@/components/ui/Scene";
 
 export function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoReady, setVideoReady] = useState(false);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+    videoRef.current?.play().catch(() => {
+      // Autoplay can be blocked by the browser; the poster/gradient stays as fallback.
+    });
+  }, []);
+
   return (
     <section className="relative flex h-screen min-h-[640px] w-full items-center justify-center overflow-hidden bg-noir">
-      <Scene scene="hero" className="absolute inset-0" showIcon={false} />
+      <Scene
+        scene="hero"
+        className="absolute inset-0"
+        showIcon={false}
+      />
+
+      <video
+        ref={videoRef}
+        className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+        style={{ opacity: videoReady ? 1 : 0, transition: "opacity 1.2s ease" }}
+        muted
+        loop
+        playsInline
+        preload="auto"
+        onCanPlay={() => setVideoReady(true)}
+        aria-hidden="true"
+      >
+        <source src="/video/hero.mp4" type="video/mp4" />
+      </video>
 
       <motion.div
         initial={{ scale: 1.15, opacity: 0.6 }}
@@ -17,7 +47,7 @@ export function Hero() {
         className="absolute inset-0"
         style={{
           backgroundImage:
-            "radial-gradient(ellipse at center, rgba(11,11,11,0) 0%, rgba(11,11,11,0.6) 65%, rgba(11,11,11,0.95) 100%)",
+            "radial-gradient(ellipse at center, rgba(11,11,11,0.15) 0%, rgba(11,11,11,0.55) 65%, rgba(11,11,11,0.92) 100%)",
         }}
       />
 

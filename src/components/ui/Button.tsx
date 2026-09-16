@@ -7,11 +7,12 @@ type Size = "sm" | "md" | "lg";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-or text-noir hover:bg-or-soft shadow-[0_0_0_1px_rgba(201,169,110,0.3)]",
-  secondary: "bg-noir text-ivoire hover:bg-noir-soft",
+    "bg-or text-noir shadow-[0_1px_2px_rgba(11,11,11,0.15)] hover:bg-or-soft hover:shadow-[0_8px_20px_-6px_rgba(201,169,110,0.55)] active:shadow-[0_2px_6px_-2px_rgba(201,169,110,0.4)]",
+  secondary:
+    "bg-noir text-ivoire shadow-[0_1px_2px_rgba(11,11,11,0.2)] hover:bg-noir-soft hover:shadow-[0_10px_24px_-8px_rgba(11,11,11,0.55)] active:shadow-[0_2px_6px_-2px_rgba(11,11,11,0.4)]",
   ghost: "bg-transparent text-ivoire hover:bg-ivoire/10",
   outline:
-    "bg-transparent text-current border border-current/40 hover:border-or hover:text-or",
+    "bg-transparent text-current border border-current/40 hover:border-or hover:text-or hover:bg-or/[0.06] hover:shadow-[0_8px_20px_-10px_rgba(201,169,110,0.4)]",
 };
 
 const sizes: Record<Size, string> = {
@@ -20,8 +21,12 @@ const sizes: Record<Size, string> = {
   lg: "px-8 py-4 text-base",
 };
 
-const base =
-  "inline-flex items-center justify-center gap-2 uppercase tracking-[0.15em] font-medium transition-all duration-300 rounded-none";
+const base = cn(
+  "relative inline-flex items-center justify-center gap-2 rounded-none font-medium uppercase tracking-[0.15em]",
+  "transition-all duration-300 ease-out will-change-transform",
+  "hover:-translate-y-0.5 active:translate-y-0 active:duration-100",
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-or focus-visible:ring-offset-0"
+);
 
 export function Button({
   children,
@@ -42,7 +47,13 @@ export function Button({
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
 }) {
-  const classes = cn(base, variants[variant], sizes[size], disabled && "opacity-50 pointer-events-none", className);
+  const classes = cn(
+    base,
+    variants[variant],
+    sizes[size],
+    disabled && "pointer-events-none opacity-50 hover:translate-y-0 hover:shadow-none",
+    className
+  );
 
   if (href) {
     return (

@@ -168,8 +168,10 @@ export function ReservationForm({ defaultOccasion }: { defaultOccasion?: string 
                   key={s.id}
                   onClick={() => setSpace(s.id)}
                   className={cn(
-                    "border p-5 text-left transition-colors",
-                    space === s.id ? "border-or bg-or/10" : "border-noir/15 hover:border-or/50"
+                    "border p-5 text-left transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-or",
+                    space === s.id
+                      ? "border-or bg-or/10 shadow-[0_10px_24px_-12px_rgba(201,169,110,0.5)]"
+                      : "border-noir/15 hover:-translate-y-0.5 hover:border-or/50 hover:shadow-[0_10px_20px_-14px_rgba(11,11,11,0.3)]"
                   )}
                 >
                   <span className="font-display text-lg text-noir">{s.id}</span>

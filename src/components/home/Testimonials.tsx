@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { Container } from "@/components/ui/SectionHeading";
+import { Card } from "@/components/ui/Card";
 import { RESTAURANT } from "@/lib/utils";
 
 type Testimonial = { id: string; author: string; rating: number; content: string };
@@ -32,15 +33,16 @@ export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) 
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="border border-noir/10 bg-white/40 p-6"
             >
-              <div className="flex gap-1">
-                {Array.from({ length: t.rating }).map((_, idx) => (
-                  <Star key={idx} className="h-3.5 w-3.5 fill-or text-or" />
-                ))}
-              </div>
-              <p className="mt-4 font-serif-alt italic text-noir/70">&ldquo;{t.content}&rdquo;</p>
-              <p className="mt-4 text-xs uppercase tracking-[0.2em] text-noir/50">{t.author}</p>
+              <Card interactive className="h-full p-6">
+                <div className="flex gap-1">
+                  {Array.from({ length: t.rating }).map((_, idx) => (
+                    <Star key={idx} className="h-3.5 w-3.5 fill-or text-or" />
+                  ))}
+                </div>
+                <p className="mt-4 font-serif-alt italic text-noir/70">&ldquo;{t.content}&rdquo;</p>
+                <p className="mt-4 text-xs uppercase tracking-[0.2em] text-noir/50">{t.author}</p>
+              </Card>
             </motion.div>
           ))}
         </div>

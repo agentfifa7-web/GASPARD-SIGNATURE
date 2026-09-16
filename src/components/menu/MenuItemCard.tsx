@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Plus, ChefHat } from "lucide-react";
 import { Scene, type SceneKey } from "@/components/ui/Scene";
+import { Card } from "@/components/ui/Card";
 import { formatFCFA } from "@/lib/utils";
 import { useCartStore } from "@/lib/cart-store";
 import { MenuItemModal } from "./MenuItemModal";
@@ -30,8 +31,8 @@ export function MenuItemCard({ item, index }: { item: MenuItemData; index: numbe
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.5, delay: (index % 6) * 0.06 }}
-        className="group flex flex-col overflow-hidden border border-noir/10 bg-white/40"
       >
+      <Card interactive className="group flex h-full flex-col overflow-hidden">
         <button
           onClick={() => setOpen(true)}
           className="relative block text-left"
@@ -56,13 +57,14 @@ export function MenuItemCard({ item, index }: { item: MenuItemData; index: numbe
             <span className="font-display text-lg text-or">{formatFCFA(item.price)}</span>
             <button
               onClick={() => addItem({ id: item.id, name: item.name, price: item.price, image: item.image })}
-              className="flex h-9 w-9 items-center justify-center border border-noir/20 text-noir transition-colors hover:border-or hover:bg-or hover:text-noir"
+              className="flex h-9 w-9 items-center justify-center border border-noir/20 text-noir transition-all duration-300 hover:-translate-y-0.5 hover:border-or hover:bg-or hover:text-noir hover:shadow-[0_6px_16px_-6px_rgba(201,169,110,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-or"
               aria-label={`Ajouter ${item.name}`}
             >
               <Plus className="h-4 w-4" />
             </button>
           </div>
         </div>
+      </Card>
       </motion.div>
 
       {open && <MenuItemModal item={item} onClose={() => setOpen(false)} />}

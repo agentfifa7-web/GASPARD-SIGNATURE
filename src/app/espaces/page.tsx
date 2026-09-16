@@ -51,7 +51,11 @@ export default function EspacesPage() {
           {SPACES.map((space, i) => (
             <RevealSection key={space.title} delay={i * 0.05}>
               <div className={`grid grid-cols-1 items-center gap-10 lg:grid-cols-2 ${i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}>
-                <Scene scene={space.scene} className="aspect-[16/10] w-full" iconClassName="h-16 w-16" />
+                <Scene
+                  scene={space.scene}
+                  className="aspect-[16/10] w-full shadow-[0_24px_48px_-24px_rgba(11,11,11,0.35)]"
+                  iconClassName="h-16 w-16"
+                />
                 <div>
                   <h2 className="font-display text-3xl text-noir">{space.title}</h2>
                   <p className="mt-3 text-noir/60">{space.description}</p>

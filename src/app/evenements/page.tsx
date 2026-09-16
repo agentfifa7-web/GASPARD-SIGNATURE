@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { Container } from "@/components/ui/SectionHeading";
 import { Scene } from "@/components/ui/Scene";
+import { Card } from "@/components/ui/Card";
 import { RevealSection } from "@/components/pages/RevealSection";
 import { EventRequestForm } from "@/components/evenements/EventRequestForm";
 
@@ -32,13 +33,13 @@ export default async function EvenementsPage() {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((cat, i) => (
             <RevealSection key={cat.id} delay={i * 0.05}>
-              <div className="group border border-noir/10 bg-white/40">
+              <Card interactive className="group overflow-hidden">
                 <Scene scene="event" className="aspect-[4/3] w-full transition-transform duration-500 group-hover:scale-105" />
                 <div className="p-5">
                   <h3 className="font-display text-lg text-noir">{cat.name}</h3>
                   <p className="mt-2 text-sm text-noir/60">{cat.description}</p>
                 </div>
-              </div>
+              </Card>
             </RevealSection>
           ))}
         </div>

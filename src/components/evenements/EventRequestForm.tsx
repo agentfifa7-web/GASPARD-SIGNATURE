@@ -4,10 +4,18 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { formatFCFA } from "@/lib/utils";
+import { cn, formatFCFA } from "@/lib/utils";
 
 const AMBIANCES = ["Élégante & feutrée", "Festive & musicale", "Décontractée", "Romantique"];
 const BUDGETS = ["< 300 000 FCFA", "300 000 – 700 000 FCFA", "700 000 – 1 500 000 FCFA", "> 1 500 000 FCFA"];
+
+const pill = (active: boolean) =>
+  cn(
+    "border px-3 py-1.5 text-xs transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-or",
+    active
+      ? "border-or bg-or text-noir shadow-[0_8px_20px_-10px_rgba(201,169,110,0.6)]"
+      : "border-noir/15 text-noir/60 hover:-translate-y-0.5 hover:border-or/50 hover:text-noir"
+  );
 
 export function EventRequestForm({ eventTypes }: { eventTypes: string[] }) {
   const [type, setType] = useState(eventTypes[0] ?? "Anniversaire");
@@ -66,7 +74,7 @@ export function EventRequestForm({ eventTypes }: { eventTypes: string[] }) {
             <button
               key={t}
               onClick={() => setType(t)}
-              className={`border px-3 py-1.5 text-xs uppercase tracking-[0.1em] ${type === t ? "border-or bg-or text-noir" : "border-noir/15 text-noir/60"}`}
+              className={cn(pill(type === t), "uppercase tracking-[0.1em]")}
             >
               {t}
             </button>
@@ -103,7 +111,7 @@ export function EventRequestForm({ eventTypes }: { eventTypes: string[] }) {
             <button
               key={b}
               onClick={() => setBudget(b)}
-              className={`border px-3 py-1.5 text-xs ${budget === b ? "border-or bg-or text-noir" : "border-noir/15 text-noir/60"}`}
+              className={pill(budget === b)}
             >
               {b}
             </button>
@@ -118,7 +126,7 @@ export function EventRequestForm({ eventTypes }: { eventTypes: string[] }) {
             <button
               key={a}
               onClick={() => setAmbiance(a)}
-              className={`border px-3 py-1.5 text-xs ${ambiance === a ? "border-or bg-or text-noir" : "border-noir/15 text-noir/60"}`}
+              className={pill(ambiance === a)}
             >
               {a}
             </button>
